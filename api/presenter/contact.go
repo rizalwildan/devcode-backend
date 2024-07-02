@@ -40,3 +40,11 @@ func ContactErrorResponse(err error) *fiber.Map {
 		"message": err.Error(),
 	}
 }
+
+func ContactDeleteResponse(id uint) *fiber.Map {
+	return &fiber.Map{
+		"status":    "Success",
+		"message":   "Contact deleted",
+		"deletedId": id,
+	}
+}

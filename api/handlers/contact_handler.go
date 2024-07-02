@@ -6,6 +6,7 @@ import (
 	"github.com/rizalwildan/devcode-backend/pkg/contact"
 	"github.com/rizalwildan/devcode-backend/pkg/models"
 	"net/http"
+	"strconv"
 )
 
 func GetContacts(service contact.Service) fiber.Handler {
@@ -46,5 +47,40 @@ func CreateContact(service contact.Service) fiber.Handler {
 		}
 
 		return c.JSON(presenter.ContactResponse(result, "Contact created"))
+	}
+}
+
+func UpdateContact(service contact.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		var requestBody models.ContactParam
+		err := c.BodyParser(&requestBody)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return c.JSON(presenter.ContactErrorResponse(err))
+		}
+
+		id, _ := strconv.Atoi(c.Params("id"))
+
+		result, err := service.UpdateContact(uint(id), &requestBody)
+		if err != nil {
+			c.Status(http.StatusInternalServerError)
+			return c.JSON(presenter.ContactErrorResponse(err))
+		}
+
+		return c.JSON(presenter.ContactResponse(result, "Contact updated"))
+	}
+}
+
+func DeleteContact(service contact.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		id, _ := strconv.Atoi(c.Params("id"))
+
+		err := service.DeleteContact(uint(id))
+		if err != nil {
+			c.Status(http.StatusInternalServerError)
+			return c.JSON(presenter.ContactErrorResponse(err))
+		}
+
+		return c.JSON(presenter.ContactDeleteResponse(uint(id)))
 	}
 }

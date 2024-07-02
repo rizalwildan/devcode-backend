@@ -9,4 +9,6 @@ import (
 func ContactRouter(app fiber.Router, service contact.Service) {
 	app.Get("/contacts", handlers.GetContacts(service))
 	app.Post("/contacts", handlers.CreateContact(service))
+	app.Put("/contacts/:id", handlers.UpdateContact(service))
+	app.Delete("/contacts/:id", handlers.DeleteContact(service))
 }
