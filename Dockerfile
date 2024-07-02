@@ -22,6 +22,7 @@ WORKDIR /root/
 
 # Copy the pre-built binary file from the previous stage
 COPY --from=builder /app/devcode-app .
+COPY --from=builder /app/.env .
 
 # Expose port 3030 to the outside world
 EXPOSE 3030

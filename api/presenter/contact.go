@@ -6,7 +6,7 @@ import (
 )
 
 type Contact struct {
-	ID          int    `json:"id"`
+	ID          uint   `json:"id"`
 	FullName    string `json:"full_name"`
 	Email       string `json:"email"`
 	PhoneNumber string `json:"phone_number"`
@@ -27,7 +27,7 @@ func ContactResponse(data *models.Contact, msg string) *fiber.Map {
 	}
 }
 
-func ContactListResponse(data *[]Contact) *fiber.Map {
+func ContactListResponse(data []*Contact) *fiber.Map {
 	return &fiber.Map{
 		"status": "Success",
 		"data":   data,

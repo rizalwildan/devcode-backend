@@ -1,0 +1,13 @@
+services:
+  mysql:
+    image: mysql:8.4.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=123123
+      - MYSQL_DATABASE=contact-manager
+    ports:
+      - 3306:3306
+    volumes:
+      - contact-manager-mysql-data:/var/lib/mysql
+
+volumes:
+  contact-manager-mysql-data:
